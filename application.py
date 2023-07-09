@@ -4,19 +4,19 @@ from flask import Flask, render_template, request
 import numpy as np
 import joblib
 import os
-app = Flask(__name__)
+application = Flask(__name__)
 
 # Load the pre-trained model
 path=os.path.dirname(os.path.abspath(__file__))
 model = joblib.load(os.path.join(path,'house_prediction_model.pkl'))
 
 # Define the route for the home page
-@app.route('/')
+@application.route('/')
 def home():
     return render_template('index.html')
 
 # Define the route for the prediction page
-@app.route('/predict', methods=['POST'])
+@application.route('/predict', methods=['POST'])
 def predict():
     # Get input values from user
     bed = int(request.form['bedrooms'])
@@ -37,4 +37,4 @@ def predict():
     return render_template('index.html', predicted_price=predicted_price)
 
 if __name__ == '__main__':
-    app.run()
+    application.run()
